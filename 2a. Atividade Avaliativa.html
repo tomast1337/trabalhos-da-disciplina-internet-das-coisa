@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="author" content="Nicolas Vycas Nery" />
+    <title>2ª. Atividade Avaliativa</title>
+    <style>
+        html {
+            line-height: 1.5;
+            font-family: Georgia, serif;
+            font-size: 6pt;
+            color: #1a1a1a;
+            background-color: #fdfdfd;
+        }
+
+        body {
+            margin: 0 auto;
+            max-width: 36em;
+            padding-left: 50px;
+            padding-right: 50px;
+            padding-top: 25px;
+            padding-bottom: 50px;
+            hyphens: auto;
+            overflow-wrap: break-word;
+            text-rendering: optimizeLegibility;
+            font-kerning: normal;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                font-size: 0.9em;
+                padding: 1em;
+            }
+        }
+
+        @media print {
+            body {
+                background-color: transparent;
+                color: black;
+                font-size: 12pt;
+            }
+
+            p,
+            h2,
+            h3 {
+                orphans: 3;
+                widows: 3;
+            }
+
+            h2,
+            h3,
+            h4 {
+                page-break-after: avoid;
+            }
+        }
+
+        p {
+            margin: 1em 0;
+        }
+
+        a {
+            color: skyblue;
+        }
+
+        a:visited {
+            color: thistle;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin-top: 1em;
+        }
+
+        h5,
+        h6 {
+            font-size: 1em;
+            font-style: italic;
+        }
+
+        h6 {
+            font-weight: normal;
+        }
+
+        ol,
+        ul {
+            padding-left: 1em;
+            margin-top: 1em;
+        }
+
+        li>ol,
+        li>ul {
+            margin-top: 0;
+        }
+
+        blockquote {
+            margin: 1em 0 1em 1.7em;
+            padding-left: 1em;
+            border-left: 2px solid #e6e6e6;
+            color: #606060;
+        }
+
+        code {
+            font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+            font-size: 85%;
+            margin: 0;
+        }
+
+        pre {
+            margin: 1em 0;
+            overflow: auto;
+        }
+
+        pre code {
+            padding: 0;
+            overflow: visible;
+            overflow-wrap: normal;
+        }
+
+        .sourceCode {
+            background-color: transparent;
+            overflow: visible;
+        }
+
+        hr {
+            background-color: #1a1a1a;
+            border: none;
+            height: 1px;
+            margin: 1em 0;
+        }
+
+        table {
+            margin: 1em 0;
+            border-collapse: collapse;
+            width: 100%;
+            overflow-x: auto;
+            display: block;
+            font-variant-numeric: lining-nums tabular-nums;
+        }
+
+        table caption {
+            margin-bottom: 0.75em;
+        }
+
+        tbody {
+            margin-top: 0.5em;
+            border-top: 1px solid #1a1a1a;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        th {
+            border-top: 1px solid #1a1a1a;
+            padding: 0.25em 0.5em 0.25em 0.5em;
+        }
+
+        td {
+            padding: 0.125em 0.5em 0.25em 0.5em;
+        }
+
+        header {
+            margin-bottom: 0em;
+            text-align: center;
+        }
+
+        #TOC li {
+            list-style: none;
+        }
+
+        #TOC a:not(:hover) {
+            text-decoration: none;
+        }
+
+        code {
+            white-space: pre-wrap;
+        }
+
+        span.smallcaps {
+            font-variant: small-caps;
+        }
+
+        span.underline {
+            text-decoration: underline;
+        }
+
+        div.column {
+            display: inline-block;
+            vertical-align: top;
+            width: 50%;
+        }
+
+        div.hanging-indent {
+            margin-left: 1.5em;
+            text-indent: -1.5em;
+        }
+
+        ul.task-list {
+            list-style: none;
+        }
+
+        .display.math {
+            display: block;
+            text-align: center;
+            margin: 0.5rem auto;
+        }
+    </style>
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+    <center><h1 id=2atividade-avaliativa">2ª. Atividade Avaliativa</h1></center>
+    <h3 id="professor-carlos-otávio-schocair-mendes">Professor: Carlos Otávio Schocair Mendes</h3>
+    <h3 id="aluno-nicolas-vycas-nery">Aluno: Nicolas Vycas Nery</h3>
+    <h2 id="conteúdo">Conteúdo</h2>
+    <ul>
+        <li>Programa contido no arquivo Pratica-2-WiFi.ino</li>
+        <li>Monitor Serial</li>
+        <li>Video Mostrando Execução do programa</li>
+    </ul>
+    <h2 id="programa-contido-no-arquivo-pratica-2-wifi.ino">Programa contido no arquivo Pratica-2-WiFi.ino</h2>
+    <p>O programa abaixo é um exemplo de como o Node MCU pode se conectar a uma rede WiFi.</p>
+    <p>Ele possui uma função, reconectWifi, que faz a conexão com a rede WiFi e se reconecta caso a conexão seja
+        perdida.</p>
+    <p>Também por todo o programa é utilizado funções para imprimir na Serial o status da conexão, o endereço IP , o MAC
+        e o nome da rede.</p>
+    <center><img src="imagens/Tarefa2Programa.png" title="Programa Wifi" width="60%" /></center>
+    <p>Com o Node MCU conectado em uma porta usb, é possivel compilar e enviar o programa para o Node MCU.</p>
+    <p>A saida do compilador é a seguinte:</p>
+    <center><img src="imagens/Tarefa2Compilação.png" title="Saida Compilador" width="60%" /></center>
+    <h2 id="monitor-serial">Monitor Serial:</h2>
+    <p>Apos o programa ser compilado e enviado para o Node MCU, e possivel alguma lider no monitor serial do Node MCU
+        como na seguinte imagem:</p>
+    <center><img src="imagens/Tarefa2SerialBus.png" title="Saida Compilador" width="60%" /></center>
+    <h2 id="video-com-o-programa-executado">Video Mostrando Execução do programa:</h2>
+    <p><a href="https://youtu.be/EsD_c68FZxI">Link de video com o codigo rodando</a></p>
+</body>
+
+</html>
