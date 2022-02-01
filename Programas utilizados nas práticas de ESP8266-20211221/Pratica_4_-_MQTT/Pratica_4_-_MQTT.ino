@@ -13,11 +13,11 @@
 
 
                                                    
-#define ID_MQTT  "escolha_seu_ID"     //id mqtt (para identificação de sessão)
-                               //IMPORTANTE: este deve ser único no broker (ou seja, 
-                               //            se um client MQTT tentar entrar com o mesmo 
-                               //            id de outro já conectado ao broker, o broker 
-                               //            irá fechar a conexão de um deles).
+#define ID_MQTT  "escolha_seu_ID"//id mqtt (para identificação de sessão)
+                                 //IMPORTANTE: este deve ser único no broker (ou seja, 
+                                 //            se um client MQTT tentar entrar com o mesmo 
+                                 //            id de outro já conectado ao broker, o broker 
+                                 //            irá fechar a conexão de um deles).
 
 #define USER_MQTT  "login"   // usuario no MQTT
 #define PASS_MQTT  "senha"  // senha no MQTT 
@@ -41,8 +41,8 @@
                          
  
 // WIFI
-const char* SSID = "TESTE"; // SSID / nome da rede WI-FI que deseja se conectar
-const char* PASSWORD = "teste123"; // Senha da rede WI-FI que deseja se conectar
+const char* SSID = "AcessoAoInferno"; // SSID / nome da rede WI-FI que deseja se conectar
+const char* PASSWORD = "er31j5yh"; // Senha da rede WI-FI que deseja se conectar
  
 // MQTT
 const char* BROKER_MQTT = "iot.eclipse.org"; //URL do broker MQTT que se deseja utilizar
@@ -244,7 +244,6 @@ void VerificaConexoesWiFIEMQTT(void)
 {
     if (!MQTT.connected()) 
         reconnectMQTT(); //se não há conexão com o Broker, a conexão é refeita
-    
      reconectWiFi(); //se não há conexão com o WiFI, a conexão é refeita
 }
  
@@ -255,10 +254,8 @@ void VerificaConexoesWiFIEMQTT(void)
 void InitOutput(void)
 {
     //enviar HIGH para o output faz o Led acender / enviar LOW faz o Led apagar)
-    
     pinMode(D1, OUTPUT);
     digitalWrite(D1, LOW);
-              
 }
 
  
@@ -268,12 +265,8 @@ void loop()
 {   
     // keep-alive da comunicação OTA
     ArduinoOTA.handle();
-
     //garante funcionamento das conexões WiFi e ao broker MQTT
     VerificaConexoesWiFIEMQTT();
-    
- 
     //keep-alive da comunicação com broker MQTT
     MQTT.loop();
-   
 }
