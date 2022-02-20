@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Nicolas Vycas Nery" />
+  <title>4ª Atividade Avaliativa</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">4ª Atividade Avaliativa</h1>
+<p class="author">Nicolas Vycas Nery</p>
+</header>
+<h1 id="ª-atividade-avaliativa">4ª Atividade Avaliativa</h1>
+
+<h2 id="prática-prática-sobre-ota-e-mqtt">Prática prática sobre OTA e MQTT</h2>
+<h3 id="professor-carlos-otávio-schocair-mendes">Professor: Carlos Otávio Schocair Mendes</h3>
+<h3 id="aluno-nicolas-vycas-nery">Aluno: Nicolas Vycas Nery</h3>
+<!--  -->
+
+<h2 id="conteúdo">Conteúdo</h2>
+<ul>
+<li><a href="#oque_e_o_mqtt">Oque é o MQTT?</a></li>
+<li><a href="#instalação-mqtt-na-arduino-ide">Instalação MQTT na Arduino IDE</a></li>
+<li><a href="#oque-é-ota">Oque é OTA?</a></li>
+<li><a href="#instalação-ota-no-arduino-id">Instalação OTA no Arduino IDE</a></li>
+<li><a href="#programa-utilizando-ota-e-mqtt">Programa utilizando OTA e MQTT</a></li>
+<li><a href="#utilizando-ota-para-enviar-programas-para-o-esp8266">Utilizando OTA para enviar programas para o ESP8266</a></li>
+<li><a href="#configuração-do-mqtt-no-esp8266">Configuração do MQTT no ESP8266</a></li>
+<li><a href="#instalação-mqtt-dashboard">Instalação MQTT Dashboard</a></li>
+<li><a href="#utilizando-mqtt-para-receber-mensagens-no-esp8266">Utilizando MQTT para receber mensagens no ESP8266</a></li>
+<li><a href="#programa-ultilizando-wifi-manager-ota-e-mqtt">Programa utilizando Wifi Manager, OTA e MQTT</a></li>
+</ul>
+
+<h2 id="oque_e_o_mqtt">Oque é o MQTT?</h2>
+<p>MQTT é um protocolo de comunicação de mensagens leves entre dispositivos, com ele podemos comunicar com dispositivos eles estando conectados a uma rede WiFi em qualquer lugar do mundo, isso torna o protocolo muito utilizado para comunicação entre dispositivos IOT.</p>
+
+<h2 id="instalação-mqtt-na-arduino-ide">Instalação MQTT na Arduino IDE</h2>
+<p>Para ultilizar o MQTT, é necessário abri o menu Ferramentas &gt; Gerenciador de Bibliotecas, <code>no campo Refinar sua busca..</code> buscar por <code>PubSubClient</code>, é possível baixar como na imagem abaixo:</p>
+<p><img src="imagens/instalacaoPubSubClient.png" title="buscar por PubSubClient" /></p>
+
+<h2 id="oque-é-ota">Oque é OTA?</h2>
+<p>OTA é o processo de enviar, realizar o upload, de firmware para o ESP através de uma conexão WiFi ao invés da porta serial usb, trazendo uma grande diferença no desenvolvimento e atualização do firmware.</p>
+
+<h2 id="instalação-ota-no-arduino-ide">Instalação OTA no Arduino IDE</h2>
+<p>Para instalar o OTA no Arduino IDE, é necessário abri o menu Ferramentas &gt; Gerenciador de Bibliotecas, <code>no campo Refinar sua busca..</code> buscar por ArduinoOTA, e instalar a biblioteca como na imagem abaixo:</p>
+<p><img src="imagens/instalacaoOTA.png" title="buscar por ArduinoOTA" /></p>
+
+<h2 id="programa-utilizando-ota-e-mqtt">Programa utilizando OTA e MQTT</h2>
+<p>O servido MQTT que utilizei é o <a href="https://iot.eclipse.org/projects/getting-started/">Eclipse IOT</a> que possui endereço <code>mqtt.eclipseprojects.io</code> e utiliza as portas <code>1883</code> e <code>8883</code>. Com tudo isso teremos isso em nosso programa que utilizará o MQTT:</p>
+<p><img src="imagens/MQTTBasico.png" title="MQTT e OTA" /></p>
+<p>Essas variáveis serão utilizadas nas funções declaradas abaixo:</p>
+<p><img src="imagens/MQTTFunções.png" title="MQTT e OTA Funções" /></p>
+<p>O setup, e loop principal de nosso programa será o seguinte:</p>
+<p><img src="imagens/loop_ota_mqtt.png" title="MQTT e OTA loop" /></p>
+
+<h2 id="utilizando-ota-para-enviar-programas-para-o-esp8266">Utilizando OTA para enviar programas para o ESP8266</h2>
+<p>Primeiro, antes de podermos enviar os programas para o ESP8266, através do OTA, é necessário configurar enviar um programa por cabo para o ESP8266 que adicione ao dispositivo a capacidade de receber programas via WiFi. utilizando o programa feito anteriormente, ja é possível fazer isso apos a definida da funções <code>void initOTA()</code> , <code>void reconectWiFi()</code> e <code>void initWiFi()</code> como abaixo no código:</p>
+<p><img src="imagens/OTA_basico.png" title="buscar por PubSubClient" /></p>
+<p>Repare que na função <code>void initOTA()</code> é definido um hostname, e uma senha nas linhas 31 e 34, eles serão utilizados posteriormente para poder enviar o programa para o ESP8266.</p>
+<p>Apos carregado os programa para o ESP8266, enquanto eles estiver ligado e na rede que foi definida sera possível enviar o programa para o ESP8266, selecionado um dispositivo , no menu Ferramentas &gt; Portas &gt; Portas de rede, como na imagem abaixo:</p>
+<p><img src="imagens/porta_rede.png" title="Porta de rede" /></p>
+<p>Ao carregar o programa para o ESP8266, sera pedido uma senha que foi definida em código anteriormente, e a senha será utilizada para poder enviar o programa para o ESP8266.</p>
+<p><img src="imagens/ota_senha.png" title="OTA senha" /></p>
+
+<h2 id="configuração-do-mqtt-no-esp8266">Configuração do MQTT no ESP8266</h2>
+<p>Para que um programa possa usar a comunicação MQTT, é necessário configurar uma rede BROKER, que é um host que recebe as mensagens e as envia para os dispositivos, dar um ID e nome único ao dispositivo dento da rede broker, uma senha e um tópico que divide de onde o dispositivo irar receber as mensagens. Os dispositivos podem tanto publica mensagens para o broker, como receber mensagens do broker, através da biblioteca <code>PubSubClient</code> podemos configurar o ESP8266 para receber ou enviar mensagens do broker.</p>
+<p><img src="imagens/mqttfunções.png" title="Funções MQTT" /></p>
+<p>Observemos que dentro da função <code>mqtt_callback(char* topic, byte* payload, unsigned int length)</code> podemos receber o tópico, o payload e o tamanho da mensagem. utilizaremos ela posteriormente para receber as mensagens do broker.</p>
+
+<h2 id="instalação-mqtt-dashboard">Instalação MQTT Dashboard:</h2>
+<p>MQTT Dashboard torna o celular em um dispositivo capaz de enviar e receber mensagens do broker MQTT,a instalação do MQTT Dashboard foi simples, foi baixado e instalado através da Google Play Store, como na imagem abaixo:</p>
+<p><img src="imagens/InstalacaoMQTT.jpeg" title="buscar por PubSubClient" /></p>
+<p>Apos a instalação e configuração do MQTT Dashboard, é possível utilizar o MQTT Dashboard para enviar e receber mensagens do broker MQTT.</p>
+
+<h2 id="utilizando-mqtt-para-receber-mensagens-no-esp8266">Utilizando MQTT para receber mensagens no ESP8266</h2>
+<p>Agora com essas funções definidas, é possível enviar e receber mensagens do broker. então vamos criar um programa que acende um led a cada vez que receber uma mensagem do broker. Para isso teremos que fazer algumas modificações em nosso programa, como abaixo:</p>
+<p><img src="imagens/recebendo_dados_do_broker.png" title="Recebendo dados do broker" /></p>
+<p>No MQTT Dashboard, vamos criar um novo dispositivo, com o nome <code>ESP8266_LED</code>, e a senha <code>12345678</code>, e um botão que posta um playload para o tópico <code>ESP8266_LED/LED</code>, como na imagem abaixo:</p>
+<p><img src="imagens/botaomqttdashboard.jpeg" title="botao mqtt dashboard" /></p>
+<p>ao ser clicado o botão o payload,<code>LED - TOGGLE</code>, será recebido pelo ESP8266, e o LED será acionado, imagens do funcionamento no final.</p>
+
+<h2 id="programa-ultilizando-wifi-manager-ota-e-mqtt">Programa utilizando Wifi Manager, OTA e MQTT</h2>
+<p>Primeiro vamos começar com o Wifi Manager e OTA, vamos começar do programa base a baixo:</p>
+<p><img src="imagens/otaMqttWifimanager1.png" title="programa OTA e wifi manager" /></p>
+<p>Agora vamos definir as funções, <code>void init_wifi_manager();</code>, <code>void reconect_wiFi();</code> e <code>void initOTA();</code>.</p>
+<p><code>void init_wifi_manager();</code></p>
+<p><img src="imagens/init_wifi_manager.png" title="void init_wifi_manager()" /></p>
+<p><code>void reconect_wiFi();</code></p>
+<p><img src="imagens/reconect_wiFi.png" title="void reconect_wiFi()" /></p>
+<p>Observe que dentro da função <code>reconect_wiFi()</code> estamos utilizando o wifi manager para reconectar a rede, caso o ESP8266 não esteja conectado a rede.</p>
+<p><code>void initOTA();</code>.</p>
+<p><img src="imagens/initOTA.png" title="void initOTA()" /></p>
+<p>Dentro das funções <code>void setup()</code> e <code>void loop()</code> teremos:</p>
+<p><img src="imagens/setup_loop.png" title="setup() e loop()" /></p>
+<p>Ao executar o programa o ESP8266 irá iniciar o Wifi Manager, e irá pedir uma senha para conectar a rede, caso o ESP8266 não esteja conectado a rede. No monitor serial, podemos ver essa saída apos a conexão com a rede:</p>
+<p><img src="imagens/serial_ota+wifi_manager.png" title="setup() e loop()" /></p>
+<p>É claro que se o programa for feito para um fim comercial, essa senha não seria mostrada.</p>
+<p>É necessário adicionar algumas variáveis globais, como na imagem abaixo:</p>
+<p><img src="imagens/PubSubClient.png" title="variaveis globais" /></p>
+<p>Agora iremos adicionar uma função com o mqtt, para isso o programa será modificado como abaixo:</p>
+<p><img src="imagens/initMQTT_mqtt_callback_VerificaConexoesWiFIEMQTT_InitOutput.png" title="setup() e loop()" /></p>
+<p><code>void initMQTT()</code></p>
+<p><img src="imagens/initMQTT.png" title="void initMQTT()" /></p>
+<p><code>void mqtt_callback(char* topic, byte* payload, unsigned int length)</code></p>
+<p><img src="imagens/mqtt_callback.png" title="void mqtt_callback(char* topic, byte* payload, unsigned int length)" /></p>
+<p><code>void VerificaConexoesMQTT(void)</code></p>
+<p><img src="imagens/VerificaConexoesMQTT.png" title="void VerificaConexoesMQTT(void)" /></p>
+<p>Apos tudo isso possuímos um programa que irá enviar e receber mensagens do broker MQTT, e acender um led ao mesmo tempo que possui as capacidades do Wifi Manager e OTA.</p>
+<p>Imagens funcionamento:</p>
+<img width="350em" align="left" src="imagens/led_on_mqtt.jpeg" title="LED on" /></p>
+<img width="350em"  align="right" src="imagens/led_off_mqtt.jpeg" title="LED off" /></p>
+</body>
+</html>
