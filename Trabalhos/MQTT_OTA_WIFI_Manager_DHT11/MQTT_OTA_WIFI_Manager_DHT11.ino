@@ -11,10 +11,10 @@
 #define D3    0
 
 #define ID_MQTT  "mqtt_aula_nicolas_vycas_1"//id mqtt (para identificação de sessão deve ser unico)
-#define USER_MQTT  "login"   // usuario no MQTT
-#define PASS_MQTT  "12345"  // senha no MQTT 
+#define USER_MQTT  "login_nicolas_nery"   // usuario no MQTT
+#define PASS_MQTT  "987654321"  // senha no MQTT 
 
-#define PASS_OTA "teste-ota"
+#define PASS_OTA "senha-ota"
 
 #define DHT_TYPE DHT11
 
@@ -136,15 +136,14 @@ void enviaDHT(){
     if (isnan(h) || isnan(t)) {
       Serial.println("Falha ao ler o sensor DHT11");
     } else {
-      
       Serial.print("Temperatura: ");
       Serial.print(t);
       Serial.print(" *C, ");
       Serial.print("Umidade: ");
       Serial.print(h);
       Serial.println("%");
-      MQTT.publish("UMIDADE", String(h).c_str());
-      MQTT.publish("TEMPERATURA", String(t).c_str());
+      MQTT.publish("UMIDADE/DHT11","%f", h);
+      MQTT.publish("TEMPERATURA/DHT11","%f", t);
     }
 }
 
