@@ -12,44 +12,7 @@ output: pdf_document
 
 ## Introdução
 
-
-## Oque são as Interrupções?
-
-As interrupções não podem ser feitas em loops pois elas iriam acionar o Watchdog oq iriam reiniciar o ESP8266.  Dentro das interrupções não podemos utilizar funções que atualizam o Watchdog, isso sendo uma limitação do ESP8266.
-
-Existem 3 tipos de interrupções:
-- RISING: Interrupção que acontece quando o pino está em HIGH
-- FALLING: Interrupção que acontece quando o pino está em LOW
-- CHANGE: Interrupção que acontece quando o pino está em HIGH ou LOW
-
-Exemplo utilizando interrupções:
-
-```c
-#define INTERRUPT_PIN D2
-#define LED D1
-
-long last_interrupt_time = 0;
-
-void ICACHE_RAM_ATTR interrupt_handler() {
-  long interrupt_time = millis();
-  if (interrupt_time - last_interrupt_time > 1000) {
-    digitalWrite(LED, !digitalRead(LED));
-    last_interrupt_time = interrupt_time;
-  }
-}
-
-void setup() {
-  pinMode(INTERRUPT_PIN, INPUT);
-  pinMode(LED, OUTPUT);
-  attachInterrupt(digitalPinToInterrupt(INTERRUPT_PIN), interrupt_handler, RISING);
-}
-
-void loop(){
-    delay(1000);
-}
-```
-
-Com o exemplo acima, a função `interrupt_handler()` será chamada quando o pino D2 for pressionado, ou seja, quando o pino D2 for acionado, o LED será acionado. Observe que não precisamos definir nada dentro no nosso loop, para verificar o estado do pino D2, pois o ESP8266 irá fazer isso automaticamente.
+A todas as aplicações utilizando o ESP8266, precisão de um sistema de manutenção para que no caso de algum problema o sistema possa ser reiniciado, ou existir alguma função que de um tratamento a uma situação critica, independente do curso principal da aplicação. Para isso existe o Watchdog, e as interrupções.
 
 ## Oque é Watchdog?
 
@@ -136,9 +99,44 @@ void loop() {
 }
 ```
 
+## Oque são as Interrupções?
 
+As interrupções não podem ser feitas em loops pois elas iriam acionar o Watchdog oq iriam reiniciar o ESP8266.  Dentro das interrupções não podemos utilizar funções que atualizam o Watchdog, isso sendo uma limitação do ESP8266.
 
-## Exemplo de utilização do Watchdog 
+Existem 3 tipos de interrupções:
+- RISING: Interrupção que acontece quando o pino está em HIGH
+- FALLING: Interrupção que acontece quando o pino está em LOW
+- CHANGE: Interrupção que acontece quando o pino está em HIGH ou LOW
 
+Exemplo utilizando interrupções:
 
+```c
+#define INTERRUPT_PIN D2
+#define LED D1
 
+long last_interrupt_time = 0;
+
+void ICACHE_RAM_ATTR interrupt_handler() {
+  long interrupt_time = millis();
+  if (interrupt_time - last_interrupt_time > 1000) {
+    digitalWrite(LED, !digitalRead(LED));
+    last_interrupt_time = interrupt_time;
+  }
+}
+
+void setup() {
+  pinMode(INTERRUPT_PIN, INPUT);
+  pinMode(LED, OUTPUT);
+  attachInterrupt(digitalPinToInterrupt(INTERRUPT_PIN), interrupt_handler, RISING);
+}
+
+void loop(){
+    delay(1000);
+}
+```
+
+Com o exemplo acima, a função `interrupt_handler()` será chamada quando o pino D2 for pressionado, ou seja, quando o pino D2 for acionado, o LED será acionado. Observe que não precisamos definir nada dentro no nosso loop, para verificar o estado do pino D2, pois o ESP8266 irá fazer isso automaticamente.
+
+O ICACHE_RAM_ATTR é uma flag que indica que a função é uma função de interrupção, ou seja, é uma função que é chamada quando o ESP8266 recebe uma interrupção.
+
+# Conclusão
