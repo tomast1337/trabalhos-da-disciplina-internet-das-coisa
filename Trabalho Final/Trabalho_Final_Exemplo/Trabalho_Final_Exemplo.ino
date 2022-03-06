@@ -8,20 +8,18 @@ void setup(){
 
     pinMode(LED, OUTPUT);
     digitalWrite(LED, 1);
+    ESP.wdtDisable();
     delayMicroseconds(SECOND);
-    yield();
+    ESP.wdtFeed();
     for (int i = 0; i < 10; i++) {
         digitalWrite(LED, !digitalRead(LED));
-        
-        yield();
         delayMicroseconds(2*SECOND*1000);
-        yield();
-    
+        ESP.wdtFeed();
     }
 }
 
 void loop() {
     digitalWrite(LED, !digitalRead(LED));
     delayMicroseconds(SECOND*100);
-    yield();
+    ESP.wdtFeed();
 }
