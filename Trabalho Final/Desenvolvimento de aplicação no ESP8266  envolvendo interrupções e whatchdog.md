@@ -10,6 +10,14 @@ output: pdf_document
 
 ### Aluno: Nicolas Vycas Nery
 
+### Conteúdo:
+
+* Introdução
+* Watchdog
+* Interrupções
+* Programa utilizando o Watchdog, Interrupção , Wifimanager e OTA
+* Bibliografia
+
 ## Introdução
 
 A todas as aplicações utilizando o ESP8266, precisão de um sistema de manutenção para que no caso de algum problema o sistema possa ser reiniciado, ou existir alguma função que de um tratamento a uma situação critica, independente do curso principal da aplicação. Para isso existe o Watchdog, e as interrupções.
@@ -117,7 +125,7 @@ Existem 3 tipos de interrupções:
 - FALLING: Interrupção que acontece quando o pino está em LOW
 - CHANGE: Interrupção que acontece quando o pino está em HIGH ou LOW
 
-#### Exemplo utilizando interrupção externa:
+##### Exemplo utilizando interrupção externa:
 
 ```cpp
 #define INTERRUPT_PIN D2
@@ -379,12 +387,8 @@ void initOTA(){
   ArduinoOTA.begin();
   ESP.wdtFeed(); // Alimenta o watchdog
 }
-
 ```
-
-### Conclusão
-
-As funções de interrupção são muito
+O programa tem o seguinte comportamento, o wifi manager e iniciado e a pois conectado a uma redo o programa entrara em loop, onde ele pisca o LED e um ritmo rápido e verifica se o wifi esta conectado, se não estiver ele entra em um loop para tentar reconectar e enquanto ele estiver tentando reconectar ele pisca o LED em um ritmo mais acelerado, e durante qualquer momento do programa pode ocorrer uma interrupção externa onde o led piscara 10 vezes lento. Esse programa tempo o potencial de ser expandido para um dispositivo IOT talvez adicionado algum censor ao pino de interrupção que desencadeia um envio de mensagens par ao broker além de poder rodar outra tarefa no loop principal, talvez um controle de ladão e bomba de caixa d'água. 
 
 ### Bibliografia
 
