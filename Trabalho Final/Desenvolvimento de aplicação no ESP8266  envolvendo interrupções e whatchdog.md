@@ -2,6 +2,7 @@
 title: "Desenvolvimento de aplicação no ESP8266 envolvendo Interrupções e Watchdog"
 author: Nicolas Vycas Nery
 output: pdf_document
+margin: 1cm
 ---
 
 # Desenvolvimento de aplicação no ESP8266 envolvendo Interrupções e Watchdog
@@ -272,7 +273,7 @@ void initOTA();
 
 void ICACHE_RAM_ATTR interrupt_handler() {
   digitalWrite(LED_BUILTIN, HIGH);
-  // piscar LED 10 vezes
+  // piscar LED 20 vezes
   for (int i = 0; i < 20; i++) {
     digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
     delayMicroseconds(1.5 * SECOND); // Inverter estado do LED
@@ -287,23 +288,20 @@ Vamos alterar as funções `void setup()` e `void loop()` para adicionar a defin
 
 ```cpp
 void setup() {
-  ESP.wdtDisable(); // Desativa o watchdog
   Serial.begin(115200);
   Serial.println("Iniciando...");
-  
-    // IO Pins
+  // IO Pins
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(InterruptPin, INPUT);
-    // Interrupt attach
-  attachInterrupt(digitalPinToInterrupt(InterruptPin), interrupt_handler,
-                  RISING);
-
-
+  // Interrupt attach
+  attachInterrupt(digitalPinToInterrupt(InterruptPin), interrupt_handler, RISING);
   init_wifi_manager();
-  ESP.wdtFeed(); // Alimenta o watchdog
   initOTA();
+
+  ESP.wdtDisable(); // Desativa o watchdog
   ESP.wdtFeed(); // Alimenta o watchdog
 }
+
 void loop() {
   long time = millis();
   if (time - last_blink > 100) {
@@ -388,7 +386,7 @@ void initOTA(){
   ESP.wdtFeed(); // Alimenta o watchdog
 }
 ```
-O programa tem o seguinte comportamento, o wifi manager e iniciado e a pois conectado a uma redo o programa entrara em loop, onde ele pisca o LED e um ritmo rápido e verifica se o wifi esta conectado, se não estiver ele entra em um loop para tentar reconectar e enquanto ele estiver tentando reconectar ele pisca o LED em um ritmo mais acelerado, e durante qualquer momento do programa pode ocorrer uma interrupção externa onde o led piscara 10 vezes lento. Esse programa tempo o potencial de ser expandido para um dispositivo IOT talvez adicionado algum censor ao pino de interrupção que desencadeia um envio de mensagens par ao broker além de poder rodar outra tarefa no loop principal, talvez um controle de ladão e bomba de caixa d'água. 
+O programa tem o seguinte comportamento, o wifi manager e iniciado e a pois conectado a uma redo o programa entrara em loop, onde ele pisca o LED e um ritmo rápido e verifica se o wifi esta conectado, se não estiver ele entra em um loop para tentar reconectar e enquanto ele estiver tentando reconectar ele pisca o LED em um ritmo mais acelerado, e durante qualquer momento do programa pode ocorrer uma interrupção externa onde o led piscara 20 vezes lento. Esse programa tempo o potencial de ser expandido para um dispositivo IOT talvez adicionado algum censor ao pino de interrupção que desencadeia um envio de mensagens par ao broker além de poder rodar outra tarefa no loop principal, talvez um controle de ladão e bomba de caixa d'água. 
 
 ### Bibliografia
 
