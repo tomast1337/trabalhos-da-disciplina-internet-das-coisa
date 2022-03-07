@@ -14,7 +14,7 @@ output: pdf_document
 
 A todas as aplicações utilizando o ESP8266, precisão de um sistema de manutenção para que no caso de algum problema o sistema possa ser reiniciado, ou existir alguma função que de um tratamento a uma situação critica, independente do curso principal da aplicação. Para isso existe o Watchdog, e as interrupções.
 
-## Oque é Watchdog?
+## Watchdog
 
 Watchdog é um contador separado do clock principal ou seja se o programa principal travar o Watchdog reinicia o dispositivo.
 
@@ -32,8 +32,7 @@ Observe os dois códigos abaixo e note duas diferenças, um utiliza o `delay();`
 #define SECOND 1000
 
 void setup(){
-    Serial.begin(115200); // Inicia porta serial
-
+    Serial.begin(115200);
     pinMode(LED, OUTPUT);
     digitalWrite(LED, 1);
     delay(SECOND);
@@ -57,8 +56,7 @@ void loop() {
 #define SECOND 1000
 
 void setup(){
-    Serial.begin(115200); // Inicia porta serial
-
+    Serial.begin(115200);
     pinMode(LED, OUTPUT);
     digitalWrite(LED, 1);
     delayMicroseconds(SECOND);
@@ -84,7 +82,7 @@ Vamos agora adicionar o watchdog manualmente, utilizando as funções `ESP.wdtDi
 #define SECOND 1000
 
 void setup(){
-    Serial.begin(115200); // Inicia porta serial
+    Serial.begin(115200);
     pinMode(LED, OUTPUT);
     digitalWrite(LED, 1);
     ESP.wdtDisable(); // Desativa o watchdog
@@ -106,7 +104,7 @@ void loop() {
 
 Agora o código irar se comportar similar ao primeiro código que utilizava o `delay();`, o ESP8266 não sera reiniciado pelo watchdog. Com isso podemos controlar o watchdog manualmente, e podemos definir pontos de checagem em nosso programa, onde caso ele não seja alcançado a tempo o Watchdog ira reiniciar o ESP8266.
 
-### Oque são as Interrupções?
+### Interrupções
 
 Interrupções é uma condição que faz com que o microprocessador trabalhe em uma tarefa diferente do que está sendo executado, temporariamente, retornando ao processador principal, quando a interrupção e concluída. As interrupções podem ser internas, software, ou externas ,hardware.
 As interrupções de hardware são causadas por uma requisição de I/O, por uma falha de hardware, e não causam a parada imediata do programa principal.
@@ -126,9 +124,11 @@ Existem 3 tipos de interrupções:
 
 #define LED D1
 
+// Tempo desde o ultimo pulso/interrupção
 long last_interrupt_time = 0;
 
-void ICACHE_RAM_ATTR interrupt_handler() {
+// Função que será chamada quando a interrupção for disparada
+void ICACHE_RAM_ATTR interrupt_handler() { 
   long interrupt_time = millis();
   if (interrupt_time - last_interrupt_time > 1000) {
     digitalWrite(LED, !digitalRead(LED));
@@ -139,6 +139,7 @@ void ICACHE_RAM_ATTR interrupt_handler() {
 void setup() {
   pinMode(INTERRUPT_PIN, INPUT);
   pinMode(LED, OUTPUT);
+  // Configura a interrupção do pino D2/INTERRUPT_PIN como RISING (LOW -> HIGH)
   attachInterrupt(digitalPinToInterrupt(INTERRUPT_PIN), interrupt_handler, RISING);
 }
 
