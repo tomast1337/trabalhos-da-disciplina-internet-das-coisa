@@ -5,6 +5,8 @@
 #include <ESP8266WebServer.h>
 #include <ArduinoOTA.h>
 
+#define PASS_OTA "1235"
+
 #define LED_BUILTIN D4
 #define InterruptPin D3
 #define SECOND 1000000
@@ -28,51 +30,51 @@ void initOTA();
 
 // função mostra inicialização do wifi manager
 void init_wifi_manager() {
-    delayMicroseconds(SECOND/100);
-    WiFi.hostname(myHostname);
-    WiFiManager wifiManager;
-    wifiManager.autoConnect(SSID_WiFiManager, PASSWORD_WiFiManager);
-    Serial.println("\n------Conexao WI-FI Manager------\n");
-    Serial.print("Conectando-se na rede: ");
-    Serial.println(SSID_WiFiManager);
-    Serial.print("Senha: ");
-    Serial.println(PASSWORD_WiFiManager);
-    reconect_wiFi();
-    ESP.wdtFeed(); // Alimenta o watchdog
+  delayMicroseconds(SECOND / 100);
+  WiFi.hostname(myHostname);
+  WiFiManager wifiManager;
+  wifiManager.autoConnect(SSID_WiFiManager, PASSWORD_WiFiManager);
+  Serial.println("\n------Conexao WI-FI Manager------\n");
+  Serial.print("Conectando-se na rede: ");
+  Serial.println(SSID_WiFiManager);
+  Serial.print("Senha: ");
+  Serial.println(PASSWORD_WiFiManager);
+  reconect_wiFi();
+  ESP.wdtFeed(); // Alimenta o watchdog
 }
 
 // Função verifica se a rede está conectada, se não estiver, ativa o WiFiManager
-void reconect_wiFi(){
-    if (WiFi.status() == WL_CONNECTED){
-        ESP.wdtFeed();
-        return;
+void reconect_wiFi() {
+  if (WiFi.status() == WL_CONNECTED) {
+    ESP.wdtFeed();
+    return;
+  }
+
+  WiFi.hostname(myHostname);
+  WiFi.begin(SSID_WiFiManager, PASSWORD_WiFiManager);
+  long last_time = millis();
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delayMicroseconds(SECOND / 10);
+    Serial.print(".");
+    ESP.wdtFeed(); // Alimenta o watchdog
+    if (millis() - last_time > 200) {
+      digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN)); // Pisca o Led indicando que não conseguiu conectar
     }
-    
-    WiFi.hostname(myHostname);
-    WiFi.begin(SSID_WiFiManager, PASSWORD_WiFiManager);
-    long last_time = millis();
-    
-    while (WiFi.status() != WL_CONNECTED) {
-        delayMicroseconds(SECOND/10);
-        Serial.print(".");
-        ESP.wdtFeed(); // Alimenta o watchdog
-        if (millis() - last_time > 200) {
-            digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN)); // Pisca o Led indicando que não conseguiu conectar
-        }
-    }
-    Serial.println();
-    Serial.print("Conectado com sucesso na rede: ");
-    Serial.print(SSID_WiFiManager);
-    Serial.println();
-    Serial.print("IP obtido: ");
-    Serial.print(WiFi.localIP());
-    Serial.println();
-    Serial.print("Endereço MAC: ");
-    Serial.print(WiFi.macAddress());
+  }
+  Serial.println();
+  Serial.print("Conectado com sucesso na rede: ");
+  Serial.print(SSID_WiFiManager);
+  Serial.println();
+  Serial.print("IP obtido: ");
+  Serial.print(WiFi.localIP());
+  Serial.println();
+  Serial.print("Endereço MAC: ");
+  Serial.print(WiFi.macAddress());
 }
 
 //Função inicializa OTA - permite carga do novo programa via Wifi
-void initOTA(){
+void initOTA() {
   Serial.println();
   Serial.println("Iniciando OTA....");
   ArduinoOTA.setHostname("pratica-4"); // Define o nome da porta
@@ -110,19 +112,17 @@ void ICACHE_RAM_ATTR interrupt_handler() {
 }
 
 void setup() {
-  ESP.wdtDisable(); // Desativa o watchdog
   Serial.begin(115200);
   Serial.println("Iniciando...");
-  
-    // IO Pins
+  // IO Pins
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(InterruptPin, INPUT);
-    // Interrupt attach
-  attachInterrupt(digitalPinToInterrupt(InterruptPin), interrupt_handler,RISING);
-
+  // Interrupt attach
+  attachInterrupt(digitalPinToInterrupt(InterruptPin), interrupt_handler, RISING);
   init_wifi_manager();
-  ESP.wdtFeed(); // Alimenta o watchdog
   initOTA();
+
+  ESP.wdtDisable(); // Desativa o watchdog
   ESP.wdtFeed(); // Alimenta o watchdog
 }
 void loop() {
