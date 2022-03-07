@@ -72,7 +72,7 @@ void loop() {
 }
 ```
 
-Ao serem executados o primeiro, 1, código irar piscar o led 5 vezes, delay de 2 segundos, dentro do `void setup()` e depois entra em `void loop()` onde o led pisca rapidamente, lento, delay de um decimo de segundos. O segundo, 2, código irá piscar o led infinitamente lento e nunca sairá de `void setup()` porque o ESP8266 sempre estará sendo reiniciando pelo watchdog, ou seja o watchdog sempre irá reiniciar o ESP8266.
+Ao serem executados o primeiro, 1, código irar piscar o LED 5 vezes, delay de 2 segundos, dentro do `void setup()` e depois entra em `void loop()` onde o LED pisca rapidamente, lento, delay de um decimo de segundos. O segundo, 2, código irá piscar o LED infinitamente lento e nunca sairá de `void setup()` porque o ESP8266 sempre estará sendo reiniciando pelo watchdog, ou seja o watchdog sempre irá reiniciar o ESP8266.
 
 Vamos agora adicionar o watchdog manualmente, utilizando as funções `ESP.wdtDisable();` para desativar o watchdog e `ESP.wdtFeed();` para alimentar o watchdog, assim reiniciando o timer do watchdog e evitando que o ESP8266 seja reiniciado.
 
@@ -225,18 +225,17 @@ void initOTA(){
   });
   ArduinoOTA.onError([](ota_error_t error) {
     Serial.printf("Error[%u]: ", error);
-    if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
-    else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
-    else if (error == OTA_CONNECT_ERROR) Serial.println("Connect Failed");
-    else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
-    else if (error == OTA_END_ERROR) Serial.println("End Failed");
+    if (error == OTA_AUTH_ERROR) Serial.println("Auth FaiLED");
+    else if (error == OTA_BEGIN_ERROR) Serial.println("Begin FaiLED");
+    else if (error == OTA_CONNECT_ERROR) Serial.println("Connect FaiLED");
+    else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive FaiLED");
+    else if (error == OTA_END_ERROR) Serial.println("End FaiLED");
   });
   ArduinoOTA.begin();
 }
 
 void setup() {
   Serial.begin(115200);
-  Serial.println();
   Serial.println("Iniciando...");
   init_wifi_manager();
   initOTA();
@@ -245,6 +244,142 @@ void loop() {
   reconect_wiFi();
   ArduinoOTA.handle();
 }
+```
+
+Vamos agora adicionar essas definições no arquivo e a função `void ICACHE_RAM_ATTR interrupt_handler()` ao programa, vamos criar também a variável global `long last_blink = 0;` que ira armazenar o tempo do ultimo piscar do LED, no curso principal do programa.
+```cpp
+
+#define LED_BUILTIN D4
+#define InterruptPin D3
+#define SECOND 1000000
+
+long last_blink = 0;
+long state = 100;
+
+// prototypes
+void ICACHE_RAM_ATTR interrupt_handler(); // Interrupt handler function prototype
+void init_wifi_manager();
+void reconect_wiFi();
+void initOTA();
+
+void ICACHE_RAM_ATTR interrupt_handler() {
+  digitalWrite(LED_BUILTIN, HIGH);
+  // piscar LED 10 vezes
+  for (int i = 0; i < 20; i++) {
+    digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+    delayMicroseconds(1.5 * SECOND); // Inverter estado do LED
+    ESP.wdtFeed(); // Alimenta o watchdog
+    Serial.println("Interrupt");
+  }
+}
+
+```
+
+Vamos alterar as funções `void setup()` e `void loop()` para adicionar a definição da função de interrupção e adicionar o WatchDog Manual.
+
+```cpp
+void setup() {
+  ESP.wdtDisable(); // Desativa o watchdog
+  Serial.begin(115200);
+  Serial.println("Iniciando...");
+  
+    // IO Pins
+  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(InterruptPin, INPUT);
+    // Interrupt attach
+  attachInterrupt(digitalPinToInterrupt(InterruptPin), interrupt_handler,
+                  RISING);
+
+
+  init_wifi_manager();
+  ESP.wdtFeed(); // Alimenta o watchdog
+  initOTA();
+  ESP.wdtFeed(); // Alimenta o watchdog
+}
+void loop() {
+  long time = millis();
+  if (time - last_blink > 100) {
+    ESP.wdtFeed();
+    digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN)); // Piscar LED
+    Serial.println("Curso normal");
+    last_blink = time;
+  }
+
+  reconect_wiFi();
+  ArduinoOTA.handle();
+}
+```
+
+E adicionar o WatchDog as funções `void init_wifi_manager();`, `void reconect_wiFi();` e `void initOTA();`.
+
+```cpp
+void init_wifi_manager() {
+    delayMicroseconds(SECOND/100);
+    WiFi.hostname(myHostname);
+    WiFiManager wifiManager;
+    wifiManager.autoConnect(SSID_WiFiManager, PASSWORD_WiFiManager);
+    Serial.println("\n------Conexao WI-FI Manager------\n");
+    Serial.print("Conectando-se na rede: ");
+    Serial.println(SSID_WiFiManager);
+    Serial.print("Senha: ");
+    Serial.println(PASSWORD_WiFiManager);
+    reconect_wiFi();
+    ESP.wdtFeed(); // Alimenta o watchdog
+}
+
+void reconect_wiFi(){
+    if (WiFi.status() == WL_CONNECTED){
+        ESP.wdtFeed();
+        return;
+    }
+        
+    WiFi.hostname(myHostname);
+    WiFi.begin(SSID_WiFiManager, PASSWORD_WiFiManager);
+    while (WiFi.status() != WL_CONNECTED) {
+        delayMicroseconds(SECOND/10);
+        Serial.print(".");
+        ESP.wdtFeed(); // Alimenta o watchdog
+        if (millis() - last_time > 200) {
+            digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));// Pisca o Led indicando que não conseguiu conectar
+        }
+    }
+    Serial.println();
+    Serial.print("Conectado com sucesso na rede: ");
+    Serial.print(SSID_WiFiManager);
+    Serial.println();
+    Serial.print("IP obtido: ");
+    Serial.print(WiFi.localIP());
+    Serial.println();
+    Serial.print("Endereço MAC: ");
+    Serial.print(WiFi.macAddress());
+}
+
+void initOTA(){
+  Serial.println();
+  Serial.println("Iniciando OTA....");
+  ArduinoOTA.setHostname("pratica-4"); // Define o nome da porta
+  ArduinoOTA.setPassword((const char *)PASS_OTA); // senha para carga via WiFi (OTA)
+  ArduinoOTA.onStart([]() {
+    Serial.println("Start");
+  });
+  ArduinoOTA.onEnd([]() {
+    Serial.println("\nEnd");
+  });
+  ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
+    Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
+  });
+  ArduinoOTA.onError([](ota_error_t error) {
+    Serial.printf("Error[%u]: ", error);
+    if (error == OTA_AUTH_ERROR) Serial.println("Auth FaiLED");
+    else if (error == OTA_BEGIN_ERROR) Serial.println("Begin FaiLED");
+    else if (error == OTA_CONNECT_ERROR) Serial.println("Connect FaiLED");
+    else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive FaiLED");
+    else if (error == OTA_END_ERROR) Serial.println("End FaiLED");
+  });
+  ArduinoOTA.begin();
+  ESP.wdtFeed(); // Alimenta o watchdog
+}
+
 ```
 
 ### Conclusão
