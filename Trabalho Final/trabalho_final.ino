@@ -20,8 +20,8 @@ void reconect_wiFi();
 void initOTA();
 
 // WIFI MANAGER
-const char *myHostname = "nodeMCU"; // Nome do host na rede
-const char *SSID_WiFiManager = "RedeIOT";       // SSID / nome da rede WI-FI (AP) do WiFiManager
+const char *myHostname = "ESP"; // Nome do host na rede
+const char *SSID_WiFiManager = "interrupções e whatchdog";       // SSID / nome da rede WI-FI (AP) do WiFiManager
 const char *PASSWORD_WiFiManager = "12345678";  // Senha da rede WI-FI (AP) do WiFiManager
 
 void init_wifi_manager();
@@ -77,7 +77,7 @@ void reconect_wiFi() {
 void initOTA() {
   Serial.println();
   Serial.println("Iniciando OTA....");
-  ArduinoOTA.setHostname("pratica-4"); // Define o nome da porta
+  ArduinoOTA.setHostname("interrupções e whatchdog"); // Define o nome da porta
   ArduinoOTA.setPassword((const char *)PASS_OTA); // senha para carga via WiFi (OTA)
   ArduinoOTA.onStart([]() {
     Serial.println("Start");

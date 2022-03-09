@@ -2,7 +2,7 @@
 title: "Desenvolvimento de aplicação no ESP8266 envolvendo Interrupções e Watchdog"
 author: Nicolas Vycas Nery
 output: pdf_document
-margin: 1cm
+geometry: margin=2cm
 ---
 
 # Desenvolvimento de aplicação no ESP8266 envolvendo Interrupções e Watchdog
